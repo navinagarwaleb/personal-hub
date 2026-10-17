@@ -39,10 +39,10 @@ window.HUB_DATA = {
     {
       service: "Etsy",
       email: "astorylab2@gmail.com",
-      username: "",
+      username: "Astorylab",
       purpose: "A Story Lab — children's book shop",
       projects: [],
-      url: "https://www.etsy.com/shop/",
+      url: "https://www.etsy.com/shop/Astorylab",
       tags: ["shop", "books", "business"]
     },
   ]
