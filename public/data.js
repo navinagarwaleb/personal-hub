@@ -27,9 +27,16 @@ window.HUB_DATA = {
       email: "navin.agarwal.eb@gmail.com",
       username: "navinagarwaleb-1404",
       purpose: "Frontend hosting & deployments",
-      projects: ["personal-hub"],
+      projects: [
+        "personal-hub",
+        "twotreatsdown-final",
+        "navii-live",
+        "navii-live-d1y7",
+        "naviis-playlist",
+        "astorylab-landing"
+      ],
       url: "https://vercel.com/navinagarwaleb-1404",
       tags: ["hosting", "deploy"]
-    }
+    },
   ]
 };
