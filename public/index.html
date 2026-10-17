@@ -26,6 +26,20 @@ nav a:hover{color:var(--fg)}
 section{margin-top:clamp(32px,5vw,48px);scroll-margin-top:16px}
 section h2{font-size:1.2rem;margin:0 0 16px}
 .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+/* --- stackable expandable cards --- */
+.stack{display:flex;flex-direction:column;gap:10px}
+.stack-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:box-shadow .15s}
+.stack-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.stack-card-head{display:flex;align-items:center;gap:10px;padding:14px 16px;min-height:44px;user-select:none}
+.stack-card-head .title{font-weight:600;text-decoration:none;color:var(--accent);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stack-card-head .title:hover{text-decoration:underline}
+.stack-card-head .chevron{font-size:1.1rem;color:var(--muted);transition:transform .2s;flex:none;line-height:1}
+.stack-card.expanded .chevron{transform:rotate(180deg)}
+.stack-card-body{max-height:0;overflow:hidden;transition:max-height .25s ease,opacity .2s ease;opacity:0}
+.stack-card.expanded .stack-card-body{max-height:300px;opacity:1}
+.stack-card-body-inner{padding:0 16px 14px;border-top:1px solid var(--border);padding-top:12px;margin-top:0;font-size:.9rem;color:var(--muted);line-height:1.5}
+.stack-card-body-inner p{margin:0 0 6px}
+.stack-card-body-inner .meta{color:var(--muted)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
 .card a.title{font-weight:600;text-decoration:none;color:var(--accent)}
 .card a.title:hover{text-decoration:underline}
@@ -116,7 +130,7 @@ body.locked .wrap{visibility:hidden}
 
   <section id="links" aria-labelledby="links-h">
     <h2 id="links-h">Quick links</h2>
-    <div class="grid" id="links-grid"></div>
+    <div class="stack" id="links-grid"></div>
   </section>
 
   <section id="accounts" aria-labelledby="accts-h">
@@ -177,15 +191,33 @@ body.locked .wrap{visibility:hidden}
   var D=window.HUB_DATA||{links:[],notes:[],todos:[],accounts:[]};
   function el(t,a,text){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(text!=null)e.appendChild(document.createTextNode(text));return e}
 
-  // ---- links ----
+  // ---- links (stackable expandable cards) ----
   var lg=document.getElementById("links-grid");
   if(!D.links.length)lg.appendChild(el("p",{class:"empty"},"No links yet."));
   D.links.forEach(function(l){
-    var c=el("article",{class:"card"});
+    var c=el("div",{class:"stack-card",role:"button",tabindex:"0","aria-expanded":"false"});
+    var head=el("div",{class:"stack-card-head"});
     var a=el("a",{class:"title",href:l.url,target:"_blank",rel:"noopener noreferrer"},l.title);
-    c.appendChild(a);
-    if(l.tag)c.appendChild(el("span",{class:"tag"},l.tag));
-    if(l.note)c.appendChild(el("p",{class:"meta"},l.note));
+    head.appendChild(a);
+    if(l.tag)head.appendChild(el("span",{class:"tag"},l.tag));
+    head.appendChild(el("span",{class:"chevron"},"▾"));
+    c.appendChild(head);
+    var body=el("div",{class:"stack-card-body"});
+    var inner=el("div",{class:"stack-card-body-inner"});
+    if(l.note)inner.appendChild(el("p",{class:"meta"},l.note));
+    if(l.details)inner.appendChild(el("p",null,l.details));
+    body.appendChild(inner);
+    c.appendChild(body);
+    // toggle expand on click (but not if the link itself was clicked)
+    c.addEventListener("click",function(e){
+      if(e.target.closest("a"))return;
+      var expanded=this.classList.toggle("expanded");
+      this.setAttribute("aria-expanded",expanded);
+    });
+    // keyboard support
+    c.addEventListener("keydown",function(e){
+      if(e.key==="Enter"||e.key===" "){e.preventDefault();this.click()}
+    });
     lg.appendChild(c);
   });
 

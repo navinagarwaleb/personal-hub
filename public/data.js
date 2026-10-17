@@ -1,9 +1,9 @@
 // Edit this file to change what the hub shows. Keep it non-sensitive.
 window.HUB_DATA = {
   links: [
-    { title: "GitHub", url: "https://github.com/navinagarwaleb", tag: "Code", note: "All my repos" },
-    { title: "Vercel Dashboard", url: "https://vercel.com/navinagarwaleb-1404/projects", tag: "Hosting" },
-    { title: "Gmail", url: "https://mail.google.com", tag: "Email" }
+    { title: "GitHub", url: "https://github.com/navinagarwaleb", tag: "Code", note: "All my repos", details: "4 active repos: personal-hub, Navii-live, naviis-playlist, 2TreatsDown_Final." },
+    { title: "Vercel Dashboard", url: "https://vercel.com/navinagarwaleb-1404/projects", tag: "Hosting", note: "Deployments & projects", details: "5 projects hosted. songtable.com → navii-live. 2treatsdown.com → twotreatsdown-final." },
+    { title: "Gmail", url: "https://mail.google.com", tag: "Email", note: "Primary: navin.agarwal.eb@gmail.com", details: "Used for GitHub, Vercel, and personal accounts." }
   ],
   notes: [
     { title: "Account emails", body: "Primary: navin.agarwal.eb@gmail.com\nUsed for GitHub, Vercel, and personal accounts." }
