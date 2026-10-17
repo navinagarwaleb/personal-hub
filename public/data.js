@@ -31,7 +31,6 @@ window.HUB_DATA = {
         "personal-hub",
         "twotreatsdown-final",
         "navii-live",
-        "navii-live-d1y7",
         "naviis-playlist",
         "astorylab-landing"
       ],
