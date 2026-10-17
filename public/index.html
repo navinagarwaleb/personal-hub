@@ -286,7 +286,11 @@ body.locked .wrap{visibility:hidden}
       var tr=el("tr");
       // service
       var td1=el("td",{"data-label":"Service"});
-      td1.innerHTML='<span class="service-badge"><span class="dot" style="background:'+getServiceColor(a.service)+'"></span>'+a.service+'</span>';
+      if(a.url){
+        td1.innerHTML='<a href="'+a.url+'" target="_blank" rel="noopener" class="service-badge" style="text-decoration:none;color:inherit"><span class="dot" style="background:'+getServiceColor(a.service)+'"></span>'+a.service+'</a>'
+      } else {
+        td1.innerHTML='<span class="service-badge"><span class="dot" style="background:'+getServiceColor(a.service)+'"></span>'+a.service+'</span>'
+      }
       tr.appendChild(td1);
       // email
       var td2=el("td",{"data-label":"Email"});
@@ -294,7 +298,11 @@ body.locked .wrap{visibility:hidden}
       tr.appendChild(td2);
       // username
       var td3=el("td",{"data-label":"Username"});
-      td3.textContent=a.username||"-";
+      if(a.url&&a.username){
+        td3.innerHTML='<a href="'+a.url+'" target="_blank" rel="noopener" class="acct-url">'+a.username+'</a>'
+      } else {
+        td3.textContent=a.username||"-"
+      }
       tr.appendChild(td3);
       // purpose
       var td4=el("td",{"data-label":"Purpose"});
