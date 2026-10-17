@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_o5DUfUXvhSVkDi9JVnriCTCmNhXz",
+  "orgId": "team_hUkgj6d2zGbfmXQPFPfCAUiO",
+  "projectName": "personal-hub",
+  "settings": {
+    "createdAt": 1792245783887,
+    "framework": null,
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
