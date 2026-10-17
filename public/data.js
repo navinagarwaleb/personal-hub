@@ -36,5 +36,14 @@ window.HUB_DATA = {
       url: "https://vercel.com/navinagarwaleb-1404",
       tags: ["hosting", "deploy"]
     },
+    {
+      service: "Etsy",
+      email: "astorylab2@gmail.com",
+      username: "",
+      purpose: "A Story Lab — children's book shop",
+      projects: [],
+      url: "https://www.etsy.com/shop/",
+      tags: ["shop", "books", "business"]
+    },
   ]
 };
