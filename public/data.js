@@ -18,7 +18,7 @@ window.HUB_DATA = {
       email: "navin.agarwal.eb@gmail.com",
       username: "navinagarwaleb",
       purpose: "Code projects & open-source",
-      projects: ["personal-hub", "Navii-live", "naviis-playlist", "2TreatsDown_Final", "2TreatsDown---2nd", "2TreatsDown"],
+      projects: ["personal-hub", "Navii-live", "naviis-playlist", "2TreatsDown_Final"],
       url: "https://github.com/navinagarwaleb",
       tags: ["code", "git", "all"]
     },
