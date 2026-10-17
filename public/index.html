@@ -7,7 +7,7 @@
 <title>My Hub</title>
 <meta name="description" content="Personal quick-reference hub.">
 <style>
-:root{--bg:#fafaf9;--fg:#1c1917;--muted:#57534e;--accent:#2563eb;--border:#e7e5e4;--card:#ffffff;--danger:#b91c1c}
+:root{--bg:#fafaf9;--fg:#1c1917;--muted:#57534e;--accent:#2563eb;--border:#e7e5e4;--card:#ffffff;--danger:#b91c1c;--tag-bg:#e7e5e4;--row-hover:#f5f5f4}
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;font-size:16px}
 a{color:var(--accent)}
@@ -17,8 +17,8 @@ a{color:var(--accent)}
 header.top{border-bottom:1px solid var(--border);background:var(--card)}
 header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
 .brand{font-weight:700;font-size:1.1rem;text-decoration:none;color:var(--fg)}
-nav ul{list-style:none;display:flex;gap:16px;margin:0;padding:0;flex-wrap:wrap}
-nav a{color:var(--muted);text-decoration:none;padding:8px 0;min-height:44px;display:inline-flex;align-items:center}
+nav ul{list-style:none;display:flex;gap:12px;margin:0;padding:0;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;padding:8px 0;min-height:44px;display:inline-flex;align-items:center;font-size:.95rem}
 nav a:hover{color:var(--fg)}
 .hero{padding:clamp(24px,5vw,48px) 0 8px}
 .hero h1{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;margin:0 0 8px}
@@ -30,7 +30,7 @@ section h2{font-size:1.2rem;margin:0 0 16px}
 .card a.title{font-weight:600;text-decoration:none;color:var(--accent)}
 .card a.title:hover{text-decoration:underline}
 .card .meta{color:var(--muted);font-size:.9rem;margin:0}
-.tag{align-self:flex-start;font-size:.75rem;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 8px}
+.tag{display:inline-block;font-size:.75rem;color:var(--muted);background:var(--tag-bg);border-radius:999px;padding:2px 10px;white-space:nowrap}
 .empty{color:var(--muted);font-style:italic}
 details.note{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:12px}
 details.note summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
@@ -52,6 +52,33 @@ footer .wrap{padding-top:20px;padding-bottom:28px}
 #gate .err{color:var(--danger);margin:0;min-height:1.2em}
 body.locked .wrap{visibility:hidden}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* --- accounts table --- */
+.search-wrap{margin-bottom:16px}
+.search-wrap input{width:100%;font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--fg);min-height:44px}
+.search-wrap input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.acct-table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.acct-table th{text-align:left;padding:12px 14px;font-size:.8rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border);background:var(--bg)}
+.acct-table td{padding:12px 14px;border-top:1px solid var(--border);vertical-align:top}
+.acct-table tr:first-child td{border-top:0}
+.acct-table tr:hover td{background:var(--row-hover)}
+.service-badge{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.9rem}
+.service-badge .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.email-cell{font-family:monospace;font-size:.88rem;word-break:break-all}
+.project-tags{display:flex;flex-wrap:wrap;gap:4px}
+.project-tags .tag{font-size:.72rem}
+.acct-url{color:var(--accent);text-decoration:none;font-size:.85rem}
+.acct-url:hover{text-decoration:underline}
+.tag-list{display:flex;gap:4px;flex-wrap:wrap}
+.acct-count{color:var(--muted);font-size:.88rem;margin:0 0 12px}
+/* mobile: table -> cards */
+@media(max-width:640px){
+  .acct-table,.acct-table thead,.acct-table tbody,.acct-table tr,.acct-table th,.acct-table td{display:block}
+  .acct-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .acct-table tr{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+  .acct-table tr:hover td{background:transparent}
+  .acct-table td{border:0;padding:4px 0}
+  .acct-table td:before{content:attr(data-label);display:block;font-size:.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+}
 </style>
 </head>
 <body>
@@ -74,6 +101,7 @@ body.locked .wrap{visibility:hidden}
       <ul>
         <li><a href="#links">Links</a></li>
         <li><a href="#notes">Notes</a></li>
+        <li><a href="#accounts">Accounts</a></li>
         <li><a href="#todo">To-do</a></li>
       </ul>
     </nav>
@@ -83,12 +111,22 @@ body.locked .wrap{visibility:hidden}
 <main id="main" class="wrap" tabindex="-1">
   <div class="hero" id="top">
     <h1>Everything you need, one tap away</h1>
-    <p>Saved links, reference notes, and a running to-do list. Edit the content in <code>data.js</code>.</p>
+    <p>Saved links, account registry, reference notes, and to-do list. Edit content in <code>data.js</code>.</p>
   </div>
 
   <section id="links" aria-labelledby="links-h">
     <h2 id="links-h">Quick links</h2>
     <div class="grid" id="links-grid"></div>
+  </section>
+
+  <section id="accounts" aria-labelledby="accts-h">
+    <h2 id="accts-h">Account registry</h2>
+    <p class="acct-count" id="acct-count"></p>
+    <div class="search-wrap">
+      <label for="acct-search" class="sr">Search accounts</label>
+      <input id="acct-search" type="search" placeholder="Search by service, email, purpose, project or tag…" autocomplete="off">
+    </div>
+    <div id="acct-table-wrap"></div>
   </section>
 
   <section id="notes" aria-labelledby="notes-h">
@@ -118,9 +156,12 @@ body.locked .wrap{visibility:hidden}
   };
   function sha(s){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){
     return Array.prototype.map.call(new Uint8Array(b),function(x){return x.toString(16).padStart(2,"0")}).join("")})}
-  function unlock(){var g=document.getElementById("gate");if(g)g.remove();document.body.classList.remove("locked")}
+  function unlock(){
+    var g=document.getElementById("gate");if(g)g.remove();
+    document.body.classList.remove("locked")
+  }
   document.body.classList.add("locked");
-  if(store.get("hub-ok")==="1"){unlock()}
+  if(store.get("hub-ok")=="1"){unlock()}
   else{
     document.getElementById("gate-form").addEventListener("submit",function(ev){
       ev.preventDefault();
@@ -132,10 +173,11 @@ body.locked .wrap{visibility:hidden}
     });
   }
 
-  // ---- render content from data.js ----
-  var D=window.HUB_DATA||{links:[],notes:[],todos:[]};
-  function el(t,attrs,text){var e=document.createElement(t);if(attrs)for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
+  // ---- helpers ----
+  var D=window.HUB_DATA||{links:[],notes:[],todos:[],accounts:[]};
+  function el(t,a,text){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(text!=null)e.appendChild(document.createTextNode(text));return e}
 
+  // ---- links ----
   var lg=document.getElementById("links-grid");
   if(!D.links.length)lg.appendChild(el("p",{class:"empty"},"No links yet."));
   D.links.forEach(function(l){
@@ -147,6 +189,7 @@ body.locked .wrap{visibility:hidden}
     lg.appendChild(c);
   });
 
+  // ---- notes ----
   var nl=document.getElementById("notes-list");
   if(!D.notes.length)nl.appendChild(el("p",{class:"empty"},"No notes yet."));
   D.notes.forEach(function(n){
@@ -156,7 +199,7 @@ body.locked .wrap{visibility:hidden}
     nl.appendChild(d);
   });
 
-  // to-dos: checkbox state saved on this device
+  // ---- todo ----
   var tl=document.getElementById("todo-list");
   var saved={};try{saved=JSON.parse(localStorage.getItem("hub-todos")||"{}")}catch(e){}
   var todos=D.todos||[];
@@ -173,6 +216,88 @@ body.locked .wrap{visibility:hidden}
     li.appendChild(lab);
     tl.appendChild(li);
   });
+
+  // ---- accounts ----
+  var serviceColors={GitHub:"#181717",Vercel:"#000000",AWS:"#FF9900",Netlify:"#00C7B7",DigitalOcean:"#0080FF",Cloudflare:"#F38020",Namecheap:"#DE3723",Google:"#4285F4",Apple:"#A2AAAD",Twitter:"#1DA1F2",Stripe:"#635BFF",Notion:"#000000",Figma:"#F24E1E",Render:"#46E3B7",Heroku:"#6762A6"};
+  function getServiceColor(s){return serviceColors[s]||"var(--muted)"}
+
+  function renderAccounts(filter){
+    var accts=D.accounts||[];
+    var q=filter?filter.toLowerCase().trim():"";
+    var matched=accts;
+    if(q){
+      matched=accts.filter(function(a){
+        var fields=[a.service,a.email,a.username,a.purpose,a.url].concat(a.projects||[],a.tags||[]).join(" ").toLowerCase();
+        return fields.indexOf(q)!==-1
+      })
+    }
+    document.getElementById("acct-count").textContent=matched.length+" account(s)";
+
+    var wrap=document.getElementById("acct-table-wrap");
+    if(!matched.length){
+      wrap.innerHTML='<p class="empty">No accounts match "'+filter+'".</p>';
+      return
+    }
+
+    // build table
+    var table=el("table",{class:"acct-table",role:"table","aria-label":"Account registry"});
+    var thead=el("thead");
+    var thr=el("tr");
+    ["Service","Email","Username","Purpose","Projects","Tags"].forEach(function(h){
+      thr.appendChild(el("th",{scope:"col"},h))
+    });
+    thead.appendChild(thr);
+    table.appendChild(thead);
+
+    var tbody=el("tbody");
+    matched.forEach(function(a){
+      var tr=el("tr");
+      // service
+      var td1=el("td",{"data-label":"Service"});
+      td1.innerHTML='<span class="service-badge"><span class="dot" style="background:'+getServiceColor(a.service)+'"></span>'+a.service+'</span>';
+      tr.appendChild(td1);
+      // email
+      var td2=el("td",{"data-label":"Email"});
+      td2.innerHTML='<span class="email-cell">'+a.email+'</span>';
+      tr.appendChild(td2);
+      // username
+      var td3=el("td",{"data-label":"Username"});
+      td3.textContent=a.username||"-";
+      tr.appendChild(td3);
+      // purpose
+      var td4=el("td",{"data-label":"Purpose"});
+      td4.textContent=a.purpose||"-";
+      tr.appendChild(td4);
+      // projects
+      var td5=el("td",{"data-label":"Projects"});
+      if(a.projects&&a.projects.length){
+        var wrap5=el("div",{class:"project-tags"});
+        a.projects.forEach(function(p){
+          wrap5.appendChild(el("span",{class:"tag"},p))
+        });
+        td5.appendChild(wrap5)
+      }else{td5.textContent="-"}
+      tr.appendChild(td5);
+      // tags
+      var td6=el("td",{"data-label":"Tags"});
+      if(a.tags&&a.tags.length){
+        var wrap6=el("div",{class:"tag-list"});
+        a.tags.forEach(function(t){
+          wrap6.appendChild(el("span",{class:"tag"},t))
+        });
+        td6.appendChild(wrap6)
+      }else{td6.textContent="-"}
+      tr.appendChild(td6);
+      tbody.appendChild(tr)
+    });
+    table.appendChild(tbody);
+    wrap.innerHTML="";
+    wrap.appendChild(table)
+  }
+
+  renderAccounts("");
+  var searchInput=document.getElementById("acct-search");
+  searchInput.addEventListener("input",function(){renderAccounts(this.value)});
 })();
 </script>
 </body>
