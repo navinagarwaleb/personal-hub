@@ -134,7 +134,7 @@ body.locked .wrap{visibility:hidden}
   </section>
 
   <section id="accounts" aria-labelledby="accts-h">
-    <h2 id="accts-h">Account registry</h2>
+    <h2 id="accts-h">Account Index</h2>
     <p class="acct-count" id="acct-count"></p>
     <div class="search-wrap">
       <label for="acct-search" class="sr">Search accounts</label>
@@ -271,68 +271,60 @@ body.locked .wrap{visibility:hidden}
       return
     }
 
-    // build table
-    var table=el("table",{class:"acct-table",role:"table","aria-label":"Account registry"});
-    var thead=el("thead");
-    var thr=el("tr");
-    ["Service","Email","Username","Purpose","Projects","Tags"].forEach(function(h){
-      thr.appendChild(el("th",{scope:"col"},h))
-    });
-    thead.appendChild(thr);
-    table.appendChild(thead);
-
-    var tbody=el("tbody");
+    // build stackable cards
+    var stack=el("div",{class:"stack"});
     matched.forEach(function(a){
-      var tr=el("tr");
-      // service
-      var td1=el("td",{"data-label":"Service"});
+      var c=el("div",{class:"stack-card",role:"button",tabindex:"0","aria-expanded":"false"});
+      var head=el("div",{class:"stack-card-head"});
+      // service badge
       if(a.url){
-        td1.innerHTML='<a href="'+a.url+'" target="_blank" rel="noopener" class="service-badge" style="text-decoration:none;color:inherit"><span class="dot" style="background:'+getServiceColor(a.service)+'"></span>'+a.service+'</a>'
+        head.innerHTML='<a href="'+a.url+'" target="_blank" rel="noopener" class="service-badge" style="text-decoration:none;color:inherit"><span class="dot" style="background:'+getServiceColor(a.service)+';width:10px;height:10px;flex:none"></span><span style="font-weight:600">'+a.service+'</span></a>'
       } else {
-        td1.innerHTML='<span class="service-badge"><span class="dot" style="background:'+getServiceColor(a.service)+'"></span>'+a.service+'</span>'
+        head.innerHTML='<span class="service-badge" style="flex:none"><span class="dot" style="background:'+getServiceColor(a.service)+';width:10px;height:10px;flex:none"></span><span style="font-weight:600">'+a.service+'</span></span>'
       }
-      tr.appendChild(td1);
       // email
-      var td2=el("td",{"data-label":"Email"});
-      td2.innerHTML='<span class="email-cell">'+a.email+'</span>';
-      tr.appendChild(td2);
-      // username
-      var td3=el("td",{"data-label":"Username"});
+      var emailSpan=el("span",{class:"email-cell",style:"flex:1;text-align:center;font-size:.88rem"},a.email);
+      head.appendChild(emailSpan);
+      // username link
       if(a.url&&a.username){
-        td3.innerHTML='<a href="'+a.url+'" target="_blank" rel="noopener" class="acct-url">'+a.username+'</a>'
-      } else {
-        td3.textContent=a.username||"-"
+        var userLink=el("a",{href:a.url,target:"_blank",rel:"noopener",class:"acct-url",style:"flex:none;white-space:nowrap"},a.username);
+        head.appendChild(userLink);
+      } else if(a.username){
+        head.appendChild(el("span",{style:"flex:none;color:var(--muted);font-size:.88rem"},a.username));
       }
-      tr.appendChild(td3);
-      // purpose
-      var td4=el("td",{"data-label":"Purpose"});
-      td4.textContent=a.purpose||"-";
-      tr.appendChild(td4);
-      // projects
-      var td5=el("td",{"data-label":"Projects"});
+      head.appendChild(el("span",{class:"chevron"},"▾"));
+      c.appendChild(head);
+
+      // expandable body
+      var body=el("div",{class:"stack-card-body"});
+      var inner=el("div",{class:"stack-card-body-inner"});
+      if(a.purpose)inner.appendChild(el("p",null,a.purpose));
       if(a.projects&&a.projects.length){
-        var wrap5=el("div",{class:"project-tags"});
-        a.projects.forEach(function(p){
-          wrap5.appendChild(el("span",{class:"tag"},p))
-        });
-        td5.appendChild(wrap5)
-      }else{td5.textContent="-"}
-      tr.appendChild(td5);
-      // tags
-      var td6=el("td",{"data-label":"Tags"});
+        var pWrap=el("div",{style:"display:flex;flex-wrap:wrap;gap:4px;margin-top:8px"});
+        a.projects.forEach(function(p){pWrap.appendChild(el("span",{class:"tag"},p))});
+        inner.appendChild(pWrap)
+      }
       if(a.tags&&a.tags.length){
-        var wrap6=el("div",{class:"tag-list"});
-        a.tags.forEach(function(t){
-          wrap6.appendChild(el("span",{class:"tag"},t))
-        });
-        td6.appendChild(wrap6)
-      }else{td6.textContent="-"}
-      tr.appendChild(td6);
-      tbody.appendChild(tr)
+        var tWrap=el("div",{style:"display:flex;flex-wrap:wrap;gap:4px;margin-top:8px"});
+        a.tags.forEach(function(t){tWrap.appendChild(el("span",{class:"tag",style:"background:var(--accent);color:#fff"},t))});
+        inner.appendChild(tWrap)
+      }
+      body.appendChild(inner);
+      c.appendChild(body);
+
+      // toggle expand
+      c.addEventListener("click",function(e){
+        if(e.target.closest("a"))return;
+        var expanded=this.classList.toggle("expanded");
+        this.setAttribute("aria-expanded",expanded);
+      });
+      c.addEventListener("keydown",function(e){
+        if(e.key==="Enter"||e.key===" "){e.preventDefault();this.click()}
+      });
+      stack.appendChild(c);
     });
-    table.appendChild(tbody);
     wrap.innerHTML="";
-    wrap.appendChild(table)
+    wrap.appendChild(stack)
   }
 
   renderAccounts("");
