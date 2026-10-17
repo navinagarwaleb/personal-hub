@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#fafaf9">
+<title>My Hub</title>
+<style>
+:root{--bg:#fafaf9;--fg:#1c1917;--muted:#57534e;--accent:#2563eb;--border:#e7e5e4;--card:#ffffff}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5}
+header,main{max-width:720px;margin:0 auto;padding:clamp(16px,4vw,32px)}
+h1{font-size:clamp(1.5rem,4vw,2rem);margin:0 0 4px}
+p.sub{color:var(--muted);margin:0 0 24px}
+section{margin-top:32px}
+h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.card a{color:var(--accent);font-weight:600;text-decoration:none}
+a:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Gate */
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+#gate[hidden]{display:none}
+#gate form{width:100%;max-width:320px;display:grid;gap:12px}
+#gate label{font-weight:600}
+#gate input{font:inherit;font-size:16px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--fg)}
+#gate button{font:inherit;font-weight:600;padding:12px;border:0;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer;min-height:44px}
+#gate .err{color:#b91c1c;font-size:.9rem;min-height:1.2em;margin:0}
+#content[hidden]{display:none}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <form id="gate-form" autocomplete="off">
+    <label for="pw">Password</label>
+    <input id="pw" name="pw" type="password" required autocomplete="current-password">
+    <button type="submit">Unlock</button>
+    <p class="err" id="gate-err" role="alert"></p>
+  </form>
+</div>
+
+<div id="content" hidden>
+  <header>
+    <h1>My Hub</h1>
+    <p class="sub">Quick reference, saved links, and to-dos.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Links</h2>
+      <div class="card"><a href="#">Example bookmark</a><p class="sub" style="margin:4px 0 0">Short description</p></div>
+    </section>
+    <section>
+      <h2>Notes</h2>
+      <div class="card"><strong>Sample checklist</strong><p class="sub" style="margin:4px 0 0">Items go here.</p></div>
+    </section>
+    <section>
+      <h2>To-do</h2>
+      <div class="card">☐ Example task</div>
+    </section>
+  </main>
+</div>
+
+<script>
+// Gate: compares SHA-256 of input against a stored hash. Only the hash is in this file.
+// Note: this is a client-side barrier. The page content is in the HTML, so it is not
+// secret from anyone who views the page source. Store nothing sensitive here.
+const PW_HASH = "1f5376210381b3e1ec377ab325a5fc52480960876a4d67800726fb6f30e5e32d";
+const KEY = "hub-unlocked";
+
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function reveal() {
+  document.getElementById("gate").hidden = true;
+  document.getElementById("content").hidden = false;
+}
+if (sessionStorage.getItem(KEY) === PW_HASH) {
+  reveal();
+} else {
+  document.getElementById("gate-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const input = document.getElementById("pw").value;
+    if ((await sha256Hex(input)) === PW_HASH) {
+      sessionStorage.setItem(KEY, PW_HASH);
+      reveal();
+    } else {
+      document.getElementById("gate-err").textContent = "Wrong password. Try again.";
+      document.getElementById("pw").select();
+    }
+  });
+}
+</script>
+</body>
+</html>

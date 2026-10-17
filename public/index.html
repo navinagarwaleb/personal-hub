@@ -1,16 +1,179 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hub — Option A</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Hub</title>
+<meta name="description" content="Personal quick-reference hub.">
 <style>
-:root{--bg:#fafaf9;--fg:#1c1917;--muted:#57534e;--accent:#2563eb;--border:#e7e5e4;--card:#ffffff}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5}
-header,main{max-width:720px;margin:0 auto;padding:clamp(16px,4vw,32px)}
-h1{font-size:clamp(1.5rem,4vw,2rem);margin:0 0 4px}p.sub{color:var(--muted);margin:0 0 24px}
-section{margin-top:32px}h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 12px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
-.card a{color:var(--accent);font-weight:600;text-decoration:none}.card a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-</style></head><body>
-<header><h1>My Hub</h1><p class="sub">Quick reference, saved links, and to-dos.</p></header>
-<main>
-<section><h2>Links</h2><div class="card"><a href="#">Example bookmark</a><p class="sub" style="margin:4px 0 0">Short description</p></div></section>
-<section><h2>Notes</h2><div class="card"><strong>Sample checklist</strong><p class="sub" style="margin:4px 0 0">Items go here.</p></div></section>
-<section><h2>To-do</h2><div class="card">☐ Example task</div></section>
-</main></body></html>
+:root{--bg:#fafaf9;--fg:#1c1917;--muted:#57534e;--accent:#2563eb;--border:#e7e5e4;--card:#ffffff;--danger:#b91c1c}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;font-size:16px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.skip{position:absolute;left:-9999px}.skip:focus{left:8px;top:8px;background:#fff;padding:8px;z-index:50}
+.wrap{max-width:960px;margin:0 auto;padding:clamp(16px,4vw,40px)}
+header.top{border-bottom:1px solid var(--border);background:var(--card)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
+.brand{font-weight:700;font-size:1.1rem;text-decoration:none;color:var(--fg)}
+nav ul{list-style:none;display:flex;gap:16px;margin:0;padding:0;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;padding:8px 0;min-height:44px;display:inline-flex;align-items:center}
+nav a:hover{color:var(--fg)}
+.hero{padding:clamp(24px,5vw,48px) 0 8px}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;margin:0 0 8px}
+.hero p{color:var(--muted);margin:0;max-width:60ch}
+section{margin-top:clamp(32px,5vw,48px);scroll-margin-top:16px}
+section h2{font-size:1.2rem;margin:0 0 16px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.card a.title{font-weight:600;text-decoration:none;color:var(--accent)}
+.card a.title:hover{text-decoration:underline}
+.card .meta{color:var(--muted);font-size:.9rem;margin:0}
+.tag{align-self:flex-start;font-size:.75rem;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 8px}
+.empty{color:var(--muted);font-style:italic}
+details.note{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:12px}
+details.note summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+details.note pre{white-space:pre-wrap;font:inherit;color:var(--fg);margin:8px 0 0}
+ul.todo{list-style:none;padding:0;margin:0;background:var(--card);border:1px solid var(--border);border-radius:12px}
+ul.todo li{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--border);min-height:44px}
+ul.todo li:first-child{border-top:0}
+ul.todo input{width:20px;height:20px;accent-color:var(--accent);flex:none}
+ul.todo label{cursor:pointer;flex:1}
+ul.todo input:checked + span{text-decoration:line-through;color:var(--muted)}
+footer{margin-top:64px;border-top:1px solid var(--border);color:var(--muted);font-size:.9rem}
+footer .wrap{padding-top:20px;padding-bottom:28px}
+/* password gate */
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:99;padding:16px}
+#gate form{display:flex;flex-direction:column;gap:12px;width:min(320px,100%)}
+#gate h2{margin:0;font-size:1.1rem}
+#gate input{font:inherit;padding:12px;border-radius:10px;border:1px solid #78716c;background:var(--card);color:var(--fg);min-height:44px}
+#gate button{font:inherit;padding:12px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:600;cursor:pointer;min-height:44px}
+#gate .err{color:var(--danger);margin:0;min-height:1.2em}
+body.locked .wrap{visibility:hidden}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-t">
+  <form id="gate-form">
+    <h2 id="gate-t">Enter password</h2>
+    <label for="pw" class="sr">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" required>
+    <button type="submit">Unlock</button>
+    <p class="err" id="gate-err" role="alert"></p>
+  </form>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">My Hub</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#links">Links</a></li>
+        <li><a href="#notes">Notes</a></li>
+        <li><a href="#todo">To-do</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <div class="hero" id="top">
+    <h1>Everything you need, one tap away</h1>
+    <p>Saved links, reference notes, and a running to-do list. Edit the content in <code>data.js</code>.</p>
+  </div>
+
+  <section id="links" aria-labelledby="links-h">
+    <h2 id="links-h">Quick links</h2>
+    <div class="grid" id="links-grid"></div>
+  </section>
+
+  <section id="notes" aria-labelledby="notes-h">
+    <h2 id="notes-h">Reference notes</h2>
+    <div id="notes-list"></div>
+  </section>
+
+  <section id="todo" aria-labelledby="todo-h">
+    <h2 id="todo-h">To-do</h2>
+    <ul class="todo" id="todo-list"></ul>
+    <p class="empty" id="todo-empty" hidden>Nothing here yet.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Private page. Content lives in <code>data.js</code>.</div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  // ---- password gate (SHA-256 of the password; plain text is not stored) ----
+  var H="743d81d8d2e10451a0b98ca3843e7c9b873c576d06c97a3dfabb41a962234f74";
+  var store={
+    get:function(k){try{return sessionStorage.getItem(k)}catch(e){return null}},
+    set:function(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
+  };
+  function sha(s){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){
+    return Array.prototype.map.call(new Uint8Array(b),function(x){return x.toString(16).padStart(2,"0")}).join("")})}
+  function unlock(){var g=document.getElementById("gate");if(g)g.remove();document.body.classList.remove("locked")}
+  document.body.classList.add("locked");
+  if(store.get("hub-ok")==="1"){unlock()}
+  else{
+    document.getElementById("gate-form").addEventListener("submit",function(ev){
+      ev.preventDefault();
+      var pw=document.getElementById("pw");
+      sha(pw.value).then(function(h){
+        if(h===H){store.set("hub-ok","1");unlock()}
+        else{document.getElementById("gate-err").textContent="Wrong password.";pw.select()}
+      });
+    });
+  }
+
+  // ---- render content from data.js ----
+  var D=window.HUB_DATA||{links:[],notes:[],todos:[]};
+  function el(t,attrs,text){var e=document.createElement(t);if(attrs)for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
+
+  var lg=document.getElementById("links-grid");
+  if(!D.links.length)lg.appendChild(el("p",{class:"empty"},"No links yet."));
+  D.links.forEach(function(l){
+    var c=el("article",{class:"card"});
+    var a=el("a",{class:"title",href:l.url,target:"_blank",rel:"noopener noreferrer"},l.title);
+    c.appendChild(a);
+    if(l.tag)c.appendChild(el("span",{class:"tag"},l.tag));
+    if(l.note)c.appendChild(el("p",{class:"meta"},l.note));
+    lg.appendChild(c);
+  });
+
+  var nl=document.getElementById("notes-list");
+  if(!D.notes.length)nl.appendChild(el("p",{class:"empty"},"No notes yet."));
+  D.notes.forEach(function(n){
+    var d=el("details",{class:"note"});
+    d.appendChild(el("summary",null,n.title));
+    d.appendChild(el("pre",null,n.body));
+    nl.appendChild(d);
+  });
+
+  // to-dos: checkbox state saved on this device
+  var tl=document.getElementById("todo-list");
+  var saved={};try{saved=JSON.parse(localStorage.getItem("hub-todos")||"{}")}catch(e){}
+  var todos=D.todos||[];
+  document.getElementById("todo-empty").hidden=todos.length>0;
+  todos.forEach(function(t,i){
+    var id="t"+i;
+    var li=el("li");
+    var cb=el("input",{type:"checkbox",id:id});
+    cb.checked=!!saved[t];
+    cb.addEventListener("change",function(){saved[t]=cb.checked;try{localStorage.setItem("hub-todos",JSON.stringify(saved))}catch(e){}});
+    var lab=el("label",{for:id});
+    lab.appendChild(cb);
+    lab.appendChild(el("span",null,t));
+    li.appendChild(lab);
+    tl.appendChild(li);
+  });
+})();
+</script>
+</body>
+</html>
