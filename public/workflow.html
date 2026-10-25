@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Book Lab Pipeline</title>
 <meta name="description" content="Six Hermes skills that turn a story idea into a print-ready illustrated children's book.">
-<link rel="stylesheet" href="design.css">
+<link rel="stylesheet" href="design.css?v=3">
 </head>
 <body class="press">
 <a class="skip" href="#pipeline">Skip to pipeline</a>
@@ -23,10 +23,10 @@
 
 <div class="frame">
   <article class="sheet" id="pipeline">
-    <header class="mast">
+    <header class="mast compact">
       <p class="kicker">Hermes agent · Book factory</p>
       <h1>Six skills.<br>One bound book.</h1>
-      <p class="lede">Six Hermes skills that turn a story idea into a print-ready illustrated children's book. Each skill is an agent workflow with its own station on the line.</p>
+      <p class="lede">Six Hermes skills that turn a story idea into a print-ready illustrated children's book.</p>
       <dl class="facts">
         <div><dt>Skills</dt><dd>6</dd></div>
         <div><dt>Spreads</dt><dd>14</dd></div>
@@ -42,91 +42,119 @@
         <p>Work moves one station at a time. Illustration starts only after the story passes review.</p>
       </div>
 
-      <ol class="map">
-        <li><a href="#ideate">Ideate</a></li>
-        <li aria-hidden="true">→</li>
-        <li><a href="#review">Review</a></li>
-        <li aria-hidden="true">→</li>
-        <li><a href="#illustrate">Illustrate</a></li>
-        <li aria-hidden="true">→</li>
-        <li><a href="#render">Render</a></li>
-        <li aria-hidden="true">→</li>
-        <li><a href="#inspect">Inspect</a></li>
-        <li aria-hidden="true">→</li>
-        <li><a href="#ship">Ship</a></li>
-      </ol>
-
-      <ol class="line">
-        <li class="station" id="ideate">
-          <div class="numwrap" aria-hidden="true"><span class="num">01</span></div>
-          <div class="copy">
-            <p class="stage">Ideate</p>
-            <h3>Story Ideator</h3>
-            <p class="skill">story-ideator</p>
-            <p>Clarifies intent, generates 3 India-centric children's book concepts with deity companions. You pick one.</p>
-            <p class="pass"><b>Hands off</b> <span>one chosen concept</span></p>
-          </div>
+      <ol class="steps">
+        <li>
+          <button type="button" class="step" id="ideate" aria-expanded="false" aria-controls="detail"
+            data-pass="one chosen concept">
+            <span class="num" aria-hidden="true">01</span>
+            <span class="stage">Ideate</span>
+            <span class="name">Story Ideator</span>
+            <span class="skill">story-ideator</span>
+            <span class="cue">Details</span>
+            <span hidden class="more">Clarifies intent, generates 3 India-centric children's book concepts with deity companions. You pick one.</span>
+          </button>
         </li>
-
-        <li class="station" id="review">
-          <div class="numwrap" aria-hidden="true"><span class="num">02</span></div>
-          <div class="copy">
-            <p class="stage">Review</p>
-            <h3>Story Auditor</h3>
-            <p class="skill">story-auditor</p>
-            <p>Production, safety, AI illustration, and personality audit. Catches issues before illustration begins.</p>
-            <p class="pass"><b>Hands off</b> <span>an approved story</span></p>
-          </div>
+        <li>
+          <button type="button" class="step" id="review" aria-expanded="false" aria-controls="detail"
+            data-pass="an approved story">
+            <span class="num" aria-hidden="true">02</span>
+            <span class="stage">Review</span>
+            <span class="name">Story Auditor</span>
+            <span class="skill">story-auditor</span>
+            <span class="cue">Details</span>
+            <span hidden class="more">Production, safety, AI illustration, and personality audit. Catches issues before illustration begins.</span>
+          </button>
         </li>
-
-        <li class="station" id="illustrate">
-          <div class="numwrap" aria-hidden="true"><span class="num">03</span></div>
-          <div class="copy">
-            <p class="stage">Illustrate</p>
-            <h3>Scene Generator</h3>
-            <p class="skill">scene-generator</p>
-            <p>Converts the approved story into 14 structured illustrated spreads (spreads 03–16) with page 28 as the closing name-game note.</p>
-            <p class="pass"><b>Hands off</b> <span>14 illustrated spreads</span></p>
-          </div>
+        <li>
+          <button type="button" class="step" id="illustrate" aria-expanded="false" aria-controls="detail"
+            data-pass="14 illustrated spreads">
+            <span class="num" aria-hidden="true">03</span>
+            <span class="stage">Illustrate</span>
+            <span class="name">Scene Generator</span>
+            <span class="skill">scene-generator</span>
+            <span class="cue">Details</span>
+            <span hidden class="more">Converts the approved story into 14 structured illustrated spreads (spreads 03–16) with page 28 as the closing name-game note.</span>
+          </button>
         </li>
-
-        <li class="station" id="render">
-          <div class="numwrap" aria-hidden="true"><span class="num">04</span></div>
-          <div class="copy">
-            <p class="stage">Render</p>
-            <h3>3D Illustrator Generator</h3>
-            <p class="skill">3d-illustration-generator-vibrant</p>
-            <p>Transforms spread data into enterprise-grade 3D illustration prompts with vibrant Pixar-quality art direction.</p>
-            <p class="pass"><b>Hands off</b> <span>3D art prompts</span></p>
-          </div>
+        <li>
+          <button type="button" class="step" id="render" aria-expanded="false" aria-controls="detail"
+            data-pass="3D art prompts">
+            <span class="num" aria-hidden="true">04</span>
+            <span class="stage">Render</span>
+            <span class="name">3D Illustrator Generator</span>
+            <span class="skill">3d-illustration-generator-vibrant</span>
+            <span class="cue">Details</span>
+            <span hidden class="more">Transforms spread data into enterprise-grade 3D illustration prompts with vibrant Pixar-quality art direction.</span>
+          </button>
         </li>
-
-        <li class="station" id="inspect">
-          <div class="numwrap" aria-hidden="true"><span class="num">05</span></div>
-          <div class="copy">
-            <p class="stage">Inspect</p>
-            <h3>Prompt Auditor</h3>
-            <p class="skill">prompt-auditor</p>
-            <p>Technical QA inspector for AI image prompt rows. Validates structure, style, hero insertion, and safety.</p>
-            <p class="pass"><b>Hands off</b> <span>cleared prompt rows</span></p>
-          </div>
+        <li>
+          <button type="button" class="step" id="inspect" aria-expanded="false" aria-controls="detail"
+            data-pass="cleared prompt rows">
+            <span class="num" aria-hidden="true">05</span>
+            <span class="stage">Inspect</span>
+            <span class="name">Prompt Auditor</span>
+            <span class="skill">prompt-auditor</span>
+            <span class="cue">Details</span>
+            <span hidden class="more">Technical QA inspector for AI image prompt rows. Validates structure, style, hero insertion, and safety.</span>
+          </button>
         </li>
-
-        <li class="station" id="ship">
-          <div class="numwrap" aria-hidden="true"><span class="num">06</span></div>
-          <div class="copy">
-            <p class="stage">Ship</p>
-            <h3>Book Factory</h3>
-            <p class="skill">book-factory</p>
-            <p>Runs the full pipeline from ideation to export. Produces Google Sheet outputs and print-ready assets.</p>
-            <p class="pass"><b>Hands off</b> <span>a Google Sheet and print-ready assets</span></p>
-          </div>
+        <li>
+          <button type="button" class="step" id="ship" aria-expanded="false" aria-controls="detail"
+            data-pass="a Google Sheet and print-ready assets">
+            <span class="num" aria-hidden="true">06</span>
+            <span class="stage">Ship</span>
+            <span class="name">Book Factory</span>
+            <span class="skill">book-factory</span>
+            <span class="cue">Details</span>
+            <span hidden class="more">Runs the full pipeline from ideation to export. Produces Google Sheet outputs and print-ready assets.</span>
+          </button>
         </li>
       </ol>
+
+      <div id="detail" class="detail" hidden>
+        <p class="stage" id="detail-stage"></p>
+        <h3 id="detail-title"></h3>
+        <p class="skill" id="detail-skill"></p>
+        <p class="body" id="detail-body"></p>
+        <p class="pass"><b>Hands off</b> <span id="detail-pass"></span></p>
+      </div>
     </section>
   </article>
 </div>
 
 <footer class="colophon">A Story Lab · Hermes Agent · Book Pipeline v1</footer>
+<script>
+(function () {
+  var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
+  var panel = document.getElementById("detail");
+  function fill(step) {
+    document.getElementById("detail-stage").textContent = step.querySelector(".stage").textContent;
+    document.getElementById("detail-title").textContent = step.querySelector(".name").textContent;
+    document.getElementById("detail-skill").textContent = step.querySelector(".skill").textContent;
+    document.getElementById("detail-body").textContent = step.querySelector(".more").textContent;
+    document.getElementById("detail-pass").textContent = step.getAttribute("data-pass");
+  }
+  function open(step) {
+    steps.forEach(function (s) {
+      var on = s === step;
+      s.setAttribute("aria-expanded", on ? "true" : "false");
+      s.querySelector(".cue").textContent = on ? "Close" : "Details";
+    });
+    if (!step) { panel.hidden = true; return; }
+    fill(step);
+    panel.hidden = false;
+  }
+  steps.forEach(function (step) {
+    step.addEventListener("click", function () {
+      var on = step.getAttribute("aria-expanded") === "true";
+      open(on ? null : step);
+      if (history.replaceState) history.replaceState(null, "", on ? "#pipeline" : "#" + step.id);
+    });
+  });
+  var id = location.hash.slice(1);
+  var start = id && document.getElementById(id);
+  if (start && start.classList.contains("step")) open(start);
+})();
+</script>
 </body>
 </html>

@@ -6,150 +6,77 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>My Hub</title>
 <meta name="description" content="Personal quick-reference hub.">
-<style>
-:root{--bg:#fafaf9;--fg:#1c1917;--muted:#57534e;--accent:#2563eb;--border:#e7e5e4;--card:#ffffff;--danger:#b91c1c;--tag-bg:#e7e5e4;--row-hover:#f5f5f4}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;font-size:16px}
-a{color:var(--accent)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.skip{position:absolute;left:-9999px}.skip:focus{left:8px;top:8px;background:#fff;padding:8px;z-index:50}
-.wrap{max-width:960px;margin:0 auto;padding:clamp(16px,4vw,40px)}
-header.top{border-bottom:1px solid var(--border);background:var(--card)}
-header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
-.brand{font-weight:700;font-size:1.1rem;text-decoration:none;color:var(--fg)}
-nav ul{list-style:none;display:flex;gap:12px;margin:0;padding:0;flex-wrap:wrap}
-nav a{color:var(--muted);text-decoration:none;padding:8px 0;min-height:44px;display:inline-flex;align-items:center;font-size:.95rem}
-nav a:hover{color:var(--fg)}
-.hero{padding:clamp(24px,5vw,48px) 0 8px}
-.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;margin:0 0 8px}
-.hero p{color:var(--muted);margin:0;max-width:60ch}
-section{margin-top:clamp(32px,5vw,48px);scroll-margin-top:16px}
-section h2{font-size:1.2rem;margin:0 0 16px}
-.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-/* --- stackable expandable cards --- */
-.stack{display:flex;flex-direction:column;gap:10px}
-.stack-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:box-shadow .15s}
-.stack-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.stack-card-head{display:flex;align-items:center;gap:10px;padding:14px 16px;min-height:44px;user-select:none}
-.stack-card-head .title{font-weight:600;text-decoration:none;color:var(--accent);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.stack-card-head .title:hover{text-decoration:underline}
-.stack-card-head .chevron{font-size:1.1rem;color:var(--muted);transition:transform .2s;flex:none;line-height:1}
-.stack-card.expanded .chevron{transform:rotate(180deg)}
-.stack-card-body{max-height:0;overflow:hidden;transition:max-height .25s ease,opacity .2s ease;opacity:0}
-.stack-card.expanded .stack-card-body{max-height:300px;opacity:1}
-.stack-card-body-inner{padding:0 16px 14px;border-top:1px solid var(--border);padding-top:12px;margin-top:0;font-size:.9rem;color:var(--muted);line-height:1.5}
-.stack-card-body-inner p{margin:0 0 6px}
-.stack-card-body-inner .meta{color:var(--muted)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
-.card a.title{font-weight:600;text-decoration:none;color:var(--accent)}
-.card a.title:hover{text-decoration:underline}
-.card .meta{color:var(--muted);font-size:.9rem;margin:0}
-.tag{display:inline-block;font-size:.75rem;color:var(--muted);background:var(--tag-bg);border-radius:999px;padding:2px 10px;white-space:nowrap}
-.empty{color:var(--muted);font-style:italic}
-details.note{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:12px}
-details.note summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
-details.note pre{white-space:pre-wrap;font:inherit;color:var(--fg);margin:8px 0 0}
-ul.todo{list-style:none;padding:0;margin:0;background:var(--card);border:1px solid var(--border);border-radius:12px}
-ul.todo li{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--border);min-height:44px}
-ul.todo li:first-child{border-top:0}
-ul.todo input{width:20px;height:20px;accent-color:var(--accent);flex:none}
-ul.todo label{cursor:pointer;flex:1}
-ul.todo input:checked + span{text-decoration:line-through;color:var(--muted)}
-footer{margin-top:64px;border-top:1px solid var(--border);color:var(--muted);font-size:.9rem}
-footer .wrap{padding-top:20px;padding-bottom:28px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-/* --- accounts table --- */
-.search-wrap{margin-bottom:16px}
-.search-wrap input{width:100%;font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--fg);min-height:44px}
-.search-wrap input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
-.acct-table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.acct-table th{text-align:left;padding:12px 14px;font-size:.8rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border);background:var(--bg)}
-.acct-table td{padding:12px 14px;border-top:1px solid var(--border);vertical-align:top}
-.acct-table tr:first-child td{border-top:0}
-.acct-table tr:hover td{background:var(--row-hover)}
-.service-badge{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.9rem}
-.service-badge .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
-.email-cell{font-family:monospace;font-size:.88rem;word-break:break-all}
-.project-tags{display:flex;flex-wrap:wrap;gap:4px}
-.project-tags .tag{font-size:.72rem}
-.acct-url{color:var(--accent);text-decoration:none;font-size:.85rem}
-.acct-url:hover{text-decoration:underline}
-.tag-list{display:flex;gap:4px;flex-wrap:wrap}
-.acct-count{color:var(--muted);font-size:.88rem;margin:0 0 12px}
-/* mobile: table -> cards */
-@media(max-width:640px){
-  .acct-table,.acct-table thead,.acct-table tbody,.acct-table tr,.acct-table th,.acct-table td{display:block}
-  .acct-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  .acct-table tr{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px}
-  .acct-table tr:hover td{background:transparent}
-  .acct-table td{border:0;padding:4px 0}
-  .acct-table td:before{content:attr(data-label);display:block;font-size:.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
-}
-</style>
+<link rel="stylesheet" href="design.css?v=3">
 </head>
-<body>
+<body class="press">
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="#top">My Hub</a>
-    <nav aria-label="Sections">
-      <ul>
-        <li><a href="#links">Links</a></li>
-                <li><a href="#notes">Notes</a></li>
-                <li><a href="#accounts">Accounts</a></li>
-                <li><a href="#todo">To-do</a></li>
-                <li><a href="workflow.html">Book Lab Pipeline</a></li>
-      </ul>
-    </nav>
-  </div>
+<header class="bar">
+  <a class="mark" href="/">A Story Lab</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="/" aria-current="page">Hub</a></li>
+      <li><a href="#links">Links</a></li>
+      <li><a href="#accounts">Accounts</a></li>
+      <li><a href="#notes">Notes</a></li>
+      <li><a href="#todo">To-do</a></li>
+      <li><a href="workflow.html">Pipeline</a></li>
+    </ul>
+  </nav>
 </header>
 
-<main id="main" class="wrap" tabindex="-1">
-  <div class="hero" id="top">
-    <h1>Everything you need, one tap away</h1>
-    <p>Saved links, account registry, reference notes, and to-do list. Edit content in <code>data.js</code>.</p>
-  </div>
+<div class="frame">
+  <main id="main" class="sheet" tabindex="-1">
+    <header class="mast compact" id="top">
+      <p class="kicker">Personal hub</p>
+      <h1>One tap away.</h1>
+      <p class="lede">Saved links, accounts, notes, and to-dos. Edit content in data.js.</p>
+      <dl class="facts">
+        <div><dt>Links</dt><dd id="n-links">0</dd></div>
+        <div><dt>Accounts</dt><dd id="n-accounts">0</dd></div>
+        <div><dt>To-dos</dt><dd id="n-todos">0</dd></div>
+      </dl>
+    </header>
 
-  <section id="links" aria-labelledby="links-h">
-    <h2 id="links-h">Quick links</h2>
-    <div class="stack" id="links-grid"></div>
-  </section>
+    <section class="block" id="links" aria-labelledby="links-h">
+      <h2 id="links-h">Quick links</h2>
+      <div class="stack" id="links-grid"></div>
+    </section>
 
-  <section id="accounts" aria-labelledby="accts-h">
-    <h2 id="accts-h">Account Index</h2>
-    <p class="acct-count" id="acct-count"></p>
-    <div class="search-wrap">
-      <label for="acct-search" class="sr">Search accounts</label>
-      <input id="acct-search" type="search" placeholder="Search by service, email, purpose, project or tag…" autocomplete="off">
-    </div>
-    <div id="acct-table-wrap"></div>
-  </section>
+    <section class="block" id="accounts" aria-labelledby="accts-h">
+      <h2 id="accts-h">Account index</h2>
+      <p class="acct-count" id="acct-count"></p>
+      <div class="search-wrap">
+        <label for="acct-search" class="sr">Search accounts</label>
+        <input id="acct-search" type="search" placeholder="Search by service, email, purpose, project or tag…" autocomplete="off">
+      </div>
+      <div id="acct-table-wrap"></div>
+    </section>
 
-  <section id="notes" aria-labelledby="notes-h">
-    <h2 id="notes-h">Reference notes</h2>
-    <div id="notes-list"></div>
-  </section>
+    <section class="block" id="notes" aria-labelledby="notes-h">
+      <h2 id="notes-h">Reference notes</h2>
+      <div id="notes-list"></div>
+    </section>
 
-  <section id="todo" aria-labelledby="todo-h">
-    <h2 id="todo-h">To-do</h2>
-    <ul class="todo" id="todo-list"></ul>
-    <p class="empty" id="todo-empty" hidden>Nothing here yet.</p>
-  </section>
-</main>
+    <section class="block" id="todo" aria-labelledby="todo-h">
+      <h2 id="todo-h">To-do</h2>
+      <ul class="todo" id="todo-list"></ul>
+      <p class="empty" id="todo-empty" hidden>Nothing here yet.</p>
+    </section>
+  </main>
+</div>
 
-<footer>
-  <div class="wrap">Private page. Content lives in <code>data.js</code>.</div>
-</footer>
+<footer class="colophon">A Story Lab · Personal hub</footer>
 
 <script src="data.js"></script>
 <script>
 (function(){
-  // ---- helpers ----
   var D=window.HUB_DATA||{links:[],notes:[],todos:[],accounts:[]};
   function el(t,a,text){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(text!=null)e.appendChild(document.createTextNode(text));return e}
+  document.getElementById("n-links").textContent=String((D.links||[]).length);
+  document.getElementById("n-accounts").textContent=String((D.accounts||[]).length);
+  document.getElementById("n-todos").textContent=String((D.todos||[]).length);
 
-  // ---- links (stackable expandable cards) ----
   var lg=document.getElementById("links-grid");
   if(!D.links.length)lg.appendChild(el("p",{class:"empty"},"No links yet."));
   D.links.forEach(function(l){
@@ -158,28 +85,25 @@ footer .wrap{padding-top:20px;padding-bottom:28px}
     var a=el("a",{class:"title",href:l.url,target:"_blank",rel:"noopener noreferrer"},l.title);
     head.appendChild(a);
     if(l.tag)head.appendChild(el("span",{class:"tag"},l.tag));
-    head.appendChild(el("span",{class:"chevron"},"▾"));
+    head.appendChild(el("span",{class:"chevron","aria-hidden":"true"},"▾"));
     c.appendChild(head);
     var body=el("div",{class:"stack-card-body"});
     var inner=el("div",{class:"stack-card-body-inner"});
-    if(l.note)inner.appendChild(el("p",{class:"meta"},l.note));
+    if(l.note)inner.appendChild(el("p",null,l.note));
     if(l.details)inner.appendChild(el("p",null,l.details));
     body.appendChild(inner);
     c.appendChild(body);
-    // toggle expand on click (but not if the link itself was clicked)
     c.addEventListener("click",function(e){
       if(e.target.closest("a"))return;
       var expanded=this.classList.toggle("expanded");
       this.setAttribute("aria-expanded",expanded);
     });
-    // keyboard support
     c.addEventListener("keydown",function(e){
       if(e.key==="Enter"||e.key===" "){e.preventDefault();this.click()}
     });
     lg.appendChild(c);
   });
 
-  // ---- notes ----
   var nl=document.getElementById("notes-list");
   if(!D.notes.length)nl.appendChild(el("p",{class:"empty"},"No notes yet."));
   D.notes.forEach(function(n){
@@ -189,7 +113,6 @@ footer .wrap{padding-top:20px;padding-bottom:28px}
     nl.appendChild(d);
   });
 
-  // ---- todo ----
   var tl=document.getElementById("todo-list");
   var saved={};try{saved=JSON.parse(localStorage.getItem("hub-todos")||"{}")}catch(e){}
   var todos=D.todos||[];
@@ -207,9 +130,8 @@ footer .wrap{padding-top:20px;padding-bottom:28px}
     tl.appendChild(li);
   });
 
-  // ---- accounts ----
   var serviceColors={GitHub:"#181717",Vercel:"#000000",AWS:"#FF9900",Netlify:"#00C7B7",DigitalOcean:"#0080FF",Cloudflare:"#F38020",Namecheap:"#DE3723",Google:"#4285F4",Apple:"#A2AAAD",Twitter:"#1DA1F2",Stripe:"#635BFF",Notion:"#000000",Figma:"#F24E1E",Render:"#46E3B7",Heroku:"#6762A6"};
-  function getServiceColor(s){return serviceColors[s]||"var(--muted)"}
+  function getServiceColor(s){return serviceColors[s]||"var(--ink-soft)"}
 
   function renderAccounts(filter){
     var accts=D.accounts||[];
@@ -225,52 +147,51 @@ footer .wrap{padding-top:20px;padding-bottom:28px}
 
     var wrap=document.getElementById("acct-table-wrap");
     if(!matched.length){
-      wrap.innerHTML='<p class="empty">No accounts match "'+filter+'".</p>';
+      wrap.textContent="";
+      wrap.appendChild(el("p",{class:"empty"},"No accounts match."));
       return
     }
 
-    // build stackable cards
-    var stack=el("div",{class:"stack"});
+    var stack=el("div",{class:"stack stack-list"});
     matched.forEach(function(a){
       var c=el("div",{class:"stack-card",role:"button",tabindex:"0","aria-expanded":"false"});
       var head=el("div",{class:"stack-card-head"});
-      // service badge
+      var badge=el("span",{class:"service-badge"});
+      var dot=el("span",{class:"dot"});
+      dot.style.background=getServiceColor(a.service);
+      badge.appendChild(dot);
       if(a.url){
-        head.innerHTML='<a href="'+a.url+'" target="_blank" rel="noopener" class="service-badge" style="text-decoration:none;color:inherit"><span class="dot" style="background:'+getServiceColor(a.service)+';width:10px;height:10px;flex:none"></span><span style="font-weight:600">'+a.service+'</span></a>'
+        var name=el("a",{href:a.url,target:"_blank",rel:"noopener",class:"title"},a.service);
+        badge.appendChild(name);
       } else {
-        head.innerHTML='<span class="service-badge" style="flex:none"><span class="dot" style="background:'+getServiceColor(a.service)+';width:10px;height:10px;flex:none"></span><span style="font-weight:600">'+a.service+'</span></span>'
+        badge.appendChild(el("span",{class:"title"},a.service));
       }
-      // email
-      var emailSpan=el("span",{class:"email-cell",style:"flex:1;text-align:center;font-size:.88rem"},a.email);
-      head.appendChild(emailSpan);
-      // username link
+      head.appendChild(badge);
+      head.appendChild(el("span",{class:"email-cell"},a.email));
       if(a.url&&a.username){
-        var userLink=el("a",{href:a.url,target:"_blank",rel:"noopener",class:"acct-url",style:"flex:none;white-space:nowrap"},a.username);
-        head.appendChild(userLink);
+        head.appendChild(el("a",{href:a.url,target:"_blank",rel:"noopener",class:"acct-url"},a.username));
       } else if(a.username){
-        head.appendChild(el("span",{style:"flex:none;color:var(--muted);font-size:.88rem"},a.username));
+        head.appendChild(el("span",{class:"acct-url"},a.username));
       }
-      head.appendChild(el("span",{class:"chevron"},"▾"));
+      head.appendChild(el("span",{class:"chevron","aria-hidden":"true"},"▾"));
       c.appendChild(head);
 
-      // expandable body
       var body=el("div",{class:"stack-card-body"});
       var inner=el("div",{class:"stack-card-body-inner"});
       if(a.purpose)inner.appendChild(el("p",null,a.purpose));
       if(a.projects&&a.projects.length){
-        var pWrap=el("div",{style:"display:flex;flex-wrap:wrap;gap:4px;margin-top:8px"});
+        var pWrap=el("div",{class:"tag-row"});
         a.projects.forEach(function(p){pWrap.appendChild(el("span",{class:"tag"},p))});
         inner.appendChild(pWrap)
       }
       if(a.tags&&a.tags.length){
-        var tWrap=el("div",{style:"display:flex;flex-wrap:wrap;gap:4px;margin-top:8px"});
-        a.tags.forEach(function(t){tWrap.appendChild(el("span",{class:"tag",style:"background:var(--accent);color:#fff"},t))});
+        var tWrap=el("div",{class:"tag-row"});
+        a.tags.forEach(function(t){tWrap.appendChild(el("span",{class:"tag solid"},t))});
         inner.appendChild(tWrap)
       }
       body.appendChild(inner);
       c.appendChild(body);
 
-      // toggle expand
       c.addEventListener("click",function(e){
         if(e.target.closest("a"))return;
         var expanded=this.classList.toggle("expanded");
@@ -281,13 +202,12 @@ footer .wrap{padding-top:20px;padding-bottom:28px}
       });
       stack.appendChild(c);
     });
-    wrap.innerHTML="";
+    wrap.textContent="";
     wrap.appendChild(stack)
   }
 
   renderAccounts("");
-  var searchInput=document.getElementById("acct-search");
-  searchInput.addEventListener("input",function(){renderAccounts(this.value)});
+  document.getElementById("acct-search").addEventListener("input",function(){renderAccounts(this.value)});
 })();
 </script>
 </body>
