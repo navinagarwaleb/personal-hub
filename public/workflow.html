@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book Lab Pipeline</title>
+<style>
+:root{--bg:#fafaf9;--fg:#1c1917;--muted:#57534e;--accent:#2563eb;--border:#e7e5e4;--card:#ffffff;--teal:#124E52;--cream:#FCF6DF;--gold:#D4AC78;--sage:#83AC94}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.5;font-size:16px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.skip{position:absolute;left:-9999px}.skip:focus{left:8px;top:8px;background:#fff;padding:8px;z-index:50}
+.wrap{max-width:960px;margin:0 auto;padding:clamp(16px,4vw,40px)}
+header.top{border-bottom:1px solid var(--border);background:var(--card)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
+.brand{font-weight:700;font-size:1.1rem;text-decoration:none;color:var(--fg)}
+nav ul{list-style:none;display:flex;gap:12px;margin:0;padding:0}
+nav a{color:var(--muted);text-decoration:none;padding:8px 0;min-height:44px;display:inline-flex;align-items:center;font-size:.95rem}
+nav a:hover{color:var(--fg)}
+.hero{padding:clamp(24px,5vw,48px) 0 8px}
+.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;margin:0 0 8px}
+.hero p{color:var(--muted);margin:0;max-width:60ch}
+
+/* ── Pipeline SVG ── */
+.pipeline-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:clamp(24px,4vw,40px)}
+.pipeline-wrap svg{width:100%;height:auto;display:block}
+.step-desc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-top:16px}
+.step-desc h3{font-size:1rem;margin:0 0 4px;color:var(--fg)}
+.step-desc p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.5}
+
+/* ── Legend ── */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;color:var(--muted)}
+.legend .dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
+
+/* ── Detail cards ── */
+.detail-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.detail-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.detail-card .num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:.85rem;margin-bottom:10px}
+.detail-card h3{font-size:.95rem;margin:0 0 4px}
+.detail-card .role{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:0 0 10px}
+.detail-card p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.5}
+.detail-card .arrow{display:flex;justify-content:center;margin-top:16px;color:var(--muted);font-size:1.2rem}
+
+footer{margin-top:48px;border-top:1px solid var(--border);color:var(--muted);font-size:.9rem}
+footer .wrap{padding-top:20px;padding-bottom:28px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">My Hub</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="/">← Hub</a></li>
+        <li><a href="#steps">Steps</a></li>
+        <li><a href="#pipeline">Pipeline</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <div class="hero">
+    <h1>Book Lab Pipeline</h1>
+    <p>Six Hermes skills that turn a story idea into a print-ready illustrated children's book. Each skill is an agent workflow with its own role in the assembly line.</p>
+  </div>
+
+  <!-- ── Pipeline SVG ── -->
+  <section id="pipeline" style="scroll-margin-top:16px">
+    <div class="pipeline-wrap">
+      <svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Book Lab workflow pipeline diagram">
+        <defs>
+          <linearGradient id="g-in" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#E8F0FE"/>
+            <stop offset="1" stop-color="#DBEAFE"/>
+          </linearGradient>
+          <linearGradient id="g-aud" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FEF3C7"/>
+            <stop offset="1" stop-color="#FDE68A"/>
+          </linearGradient>
+          <linearGradient id="g-scene" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#D1FAE5"/>
+            <stop offset="1" stop-color="#A7F3D0"/>
+          </linearGradient>
+          <linearGradient id="g-3d" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FEE2E2"/>
+            <stop offset="1" stop-color="#FECACA"/>
+          </linearGradient>
+          <linearGradient id="g-prompt" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#E0E7FF"/>
+            <stop offset="1" stop-color="#C7D2FE"/>
+          </linearGradient>
+          <linearGradient id="g-factory" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F0FDF4"/>
+            <stop offset="1" stop-color="#DCFCE7"/>
+          </linearGradient>
+          <filter id="shadow" x="-4" y="-4" width="12" height="12">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity=".12"/>
+          </filter>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+            <path d="M0 0L10 5L8 5L0 10Z" fill="#2563eb"/>
+          </marker>
+        </defs>
+
+        <!-- Background track -->
+        <rect x="20" y="90" width="840" height="70" rx="35" fill="#f0f0ee" opacity=".35"/>
+
+        <!-- Nodes -->
+        <!-- 1. Story Ideator -->
+        <rect x="32" y="82" width="108" height="56" rx="10" fill="url(#g-in)" filter="url(#shadow)"/>
+        <text x="86" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Story</text>
+        <text x="86" y="122" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Ideator</text>
+        <text x="86" y="138" text-anchor="middle" font-size="8" fill="#57534e">Concept & Ideas</text>
+
+        <!-- Arrow 1→2 -->
+        <line x1="140" y1="110" x2="190" y2="110" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <!-- 2. Story Auditor -->
+        <rect x="190" y="82" width="108" height="56" rx="10" fill="url(#g-aud)" filter="url(#shadow)"/>
+        <text x="244" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Story</text>
+        <text x="244" y="122" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Auditor</text>
+        <text x="244" y="138" text-anchor="middle" font-size="8" fill="#57534e">Safety & QA</text>
+
+        <!-- Arrow 2→3 -->
+        <line x1="298" y1="110" x2="348" y2="110" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <!-- 3. Scene Generator -->
+        <rect x="348" y="72" width="118" height="66" rx="10" fill="url(#g-scene)" filter="url(#shadow)"/>
+        <text x="407" y="98" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Scene</text>
+        <text x="407" y="114" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Generator</text>
+        <text x="407" y="130" text-anchor="middle" font-size="8" fill="#57534e">14 Illustrated</text>
+        <text x="407" y="140" text-anchor="middle" font-size="8" fill="#57534e">Spreads</text>
+
+        <!-- Arrow 3→4 -->
+        <line x1="466" y1="105" x2="516" y2="105" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <!-- 4. 3D Illustrator -->
+        <rect x="516" y="72" width="118" height="66" rx="10" fill="url(#g-3d)" filter="url(#shadow)"/>
+        <text x="575" y="98" text-anchor="middle" font-size="10" font-weight="700" fill="#1c1917">3D Illustrator</text>
+        <text x="575" y="114" text-anchor="middle" font-size="10" font-weight="700" fill="#1c1917">Generator</text>
+        <text x="575" y="130" text-anchor="middle" font-size="8" fill="#57534e">Enterprise 3D</text>
+        <text x="575" y="140" text-anchor="middle" font-size="8" fill="#57534e">Art Prompts</text>
+
+        <!-- Arrow 4→5 -->
+        <line x1="634" y1="105" x2="676" y2="105" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <!-- 5. Prompt Auditor -->
+        <rect x="676" y="82" width="110" height="56" rx="10" fill="url(#g-prompt)" filter="url(#shadow)"/>
+        <text x="731" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Prompt</text>
+        <text x="731" y="122" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Auditor</text>
+        <text x="731" y="138" text-anchor="middle" font-size="8" fill="#57534e">Prompt QA</text>
+
+        <!-- Arrow 5→6 -->
+        <line x1="786" y1="110" x2="826" y2="110" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <!-- 6. Book Factory -->
+        <rect x="826" y="76" width="110" height="56" rx="10" fill="url(#g-factory)" filter="url(#shadow)"/>
+        <text x="881" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Book</text>
+        <text x="881" y="122" text-anchor="middle" font-size="11" font-weight="700" fill="#1c1917">Factory</text>
+        <text x="881" y="138" text-anchor="middle" font-size="8" fill="#57534e">Output →</text>
+
+        <!-- Output label -->
+        <text x="936" y="106" text-anchor="middle" font-size="7" fill="#57534e">PDF /</text>
+        <text x="936" y="116" text-anchor="middle" font-size="7" fill="#57534e">Sheets</text>
+
+        <!-- Stage labels -->
+        <text x="86" y="68" text-anchor="middle" font-size="8" font-weight="600" fill="#2563eb">1. Ideate</text>
+        <text x="244" y="68" text-anchor="middle" font-size="8" font-weight="600" fill="#b45309">2. Review</text>
+        <text x="407" y="60" text-anchor="middle" font-size="8" font-weight="600" fill="#059669">3. Illustrate</text>
+        <text x="575" y="60" text-anchor="middle" font-size="8" font-weight="600" fill="#dc2626">4. Render</text>
+        <text x="731" y="68" text-anchor="middle" font-size="8" font-weight="600" fill="#4338ca">5. Inspect</text>
+        <text x="881" y="68" text-anchor="middle" font-size="8" font-weight="600" fill="#16a34a">6. Ship</text>
+
+        <!-- Per-skill detail icons -->
+        <!-- 1: lightbulb -->
+        <circle cx="86" cy="93" r="5" fill="#2563eb" opacity=".15"/>
+        <!-- 2: checkmark -->
+        <circle cx="244" cy="93" r="5" fill="#b45309" opacity=".15"/>
+        <!-- 3: layers -->
+        <circle cx="407" cy="83" r="5" fill="#059669" opacity=".15"/>
+        <!-- 4: cube -->
+        <circle cx="575" cy="83" r="5" fill="#dc2626" opacity=".15"/>
+        <!-- 5: magnifier -->
+        <circle cx="731" cy="93" r="5" fill="#4338ca" opacity=".15"/>
+        <!-- 6: rocket -->
+        <circle cx="881" cy="87" r="5" fill="#16a34a" opacity=".15"/>
+      </svg>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <span style="font-weight:600;color:var(--fg)">Legend</span>
+      <span><span class="dot" style="background:#E8F0FE"></span>Ideation</span>
+      <span><span class="dot" style="background:#FEF3C7"></span>Review</span>
+      <span><span class="dot" style="background:#D1FAE5"></span>Illustration</span>
+      <span><span class="dot" style="background:#FEE2E2"></span>Rendering</span>
+      <span><span class="dot" style="background:#E0E7FF"></span>Inspection</span>
+      <span><span class="dot" style="background:#F0FDF4"></span>Shipping</span>
+      <span><span class="dot" style="background:#2563eb;width:6px;height:2px;border-radius:0"></span>Data flow →</span>
+    </div>
+  </section>
+
+  <!-- ── Step Details ── -->
+  <section id="steps" style="margin-top:clamp(32px,5vw,48px);scroll-margin-top:16px">
+    <h2 style="font-size:1.2rem;margin:0 0 16px">How each skill works</h2>
+    <div class="detail-grid">
+      <article class="detail-card">
+        <div class="num">1</div>
+        <h3>Story Ideator</h3>
+        <p class="role">Skill: story-ideator</p>
+        <p>Clarifies intent, generates 3 India-centric children's book concepts with deity companions. User picks one.</p>
+        <div class="arrow">↓</div>
+      </article>
+
+      <article class="detail-card">
+        <div class="num">2</div>
+        <h3>Story Auditor</h3>
+        <p class="role">Skill: story-auditor</p>
+        <p>Production, safety, AI illustration, and personality audit. Catches issues before illustration begins.</p>
+        <div class="arrow">↓</div>
+      </article>
+
+      <article class="detail-card">
+        <div class="num">3</div>
+        <h3>Scene Generator</h3>
+        <p class="role">Skill: scene-generator</p>
+        <p>Converts the approved story into 14 structured illustrated spreads (spreads 03–16) with page 28 as the closing name-game note.</p>
+        <div class="arrow">↓</div>
+      </article>
+
+      <article class="detail-card">
+        <div class="num">4</div>
+        <h3>3D Illustrator Generator</h3>
+        <p class="role">Skill: 3d-illustration-generator-vibrant</p>
+        <p>Transforms spread data into enterprise-grade 3D illustration prompts with vibrant Pixar-quality art direction.</p>
+        <div class="arrow">↓</div>
+      </article>
+
+      <article class="detail-card">
+        <div class="num">5</div>
+        <h3>Prompt Auditor</h3>
+        <p class="role">Skill: prompt-auditor</p>
+        <p>Technical QA inspector for AI image prompt rows. Validates structure, style, hero insertion, and safety.</p>
+        <div class="arrow">↓</div>
+      </article>
+
+      <article class="detail-card">
+        <div class="num">6</div>
+        <h3>Book Factory</h3>
+        <p class="role">Skill: book-factory</p>
+        <p>Runs the full pipeline from ideation to export. Produces Google Sheet outputs and print-ready assets.</p>
+        <div class="arrow" style="color:var(--accent);font-size:1.1rem">✓ Done</div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">A Story Lab · Hermes Agent · Book Pipeline v1</div>
+</footer>
+</body>
+</html>
