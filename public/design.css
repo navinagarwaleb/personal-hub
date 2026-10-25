@@ -310,6 +310,33 @@ a { color: inherit; }
 }
 .detail .skill { margin-top: var(--s2); }
 .detail .body { margin: var(--s3) 0 0; max-width: 42rem; }
+.spec {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s4) var(--s5);
+  margin: var(--s4) 0 0;
+  padding: 0;
+}
+.spec div { margin: 0; }
+.spec dt {
+  margin: 0 0 var(--s1);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.spec dd {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.spec .wide { grid-column: 1 / -1; }
+.steps.quad { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.steps.quad .step { min-height: 220px; }
 .pass {
   display: flex;
   flex-wrap: wrap;
@@ -489,6 +516,8 @@ ul.todo input:checked + span { text-decoration: line-through; color: var(--ink-s
 @media (max-width: 560px) {
   .facts { gap: var(--s4); }
   .facts dd { font-size: 1.5rem; }
+  .steps.quad { grid-template-columns: 1fr; }
+  .spec { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   .step,

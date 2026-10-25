@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Story Lab Books</title>
+<meta name="description" content="Four A Story Lab books: Kanha, Bajju, Gannu, and Bhole.">
+<link rel="stylesheet" href="design.css?v=5">
+</head>
+<body class="press">
+<a class="skip" href="#books">Skip to books</a>
+
+<header class="bar">
+  <a class="mark" href="/">A Story Lab</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="/">Hub</a></li>
+      <li><a href="#books" aria-current="page">Books</a></li>
+      <li><a href="workflow.html">Pipeline</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="frame">
+  <article class="sheet" id="books">
+    <header class="mast compact">
+      <p class="kicker">A Story Lab · Books</p>
+      <h1>Four books.<br>One shelf.</h1>
+      <p class="lede">Each title pairs Aarav with a deity companion.</p>
+      <dl class="facts">
+        <div><dt>Books</dt><dd>4</dd></div>
+        <div><dt>Evergreen</dt><dd>3</dd></div>
+        <div><dt>Festive</dt><dd>1</dd></div>
+      </dl>
+    </header>
+
+    <hr class="rule">
+
+    <section aria-labelledby="books-h">
+      <div class="line-head">
+        <h2 id="books-h">The shelf</h2>
+        <p>Book 1 through Book 4. Click a card for the deity, moral, setting, keepsake, and chant.</p>
+      </div>
+
+      <ol class="steps quad">
+        <li>
+          <button type="button" class="step" id="book-1" aria-expanded="false" aria-controls="detail"
+            data-deity="Baby Krishna" data-pet="Kanha" data-type="Evergreen"
+            data-moral="Joy multiplies when it's shared" data-setting="Secret mango grove, forest"
+            data-keepsake="Peacock Feather" data-chant="—">
+            <span class="num" aria-hidden="true">01</span>
+            <span class="stage">Evergreen</span>
+            <span class="name">Kanha &amp; Aarav: The Magic Mango Adventure</span>
+            <span class="skill">Kanha · Baby Krishna</span>
+            <span class="cue">Details</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="step" id="book-2" aria-expanded="false" aria-controls="detail"
+            data-deity="Baby Hanuman" data-pet="Bajju" data-type="Evergreen"
+            data-moral="Courage means showing up scared" data-setting="Stormy backyard, flooded river"
+            data-keepsake="Brass Bell" data-chant="—">
+            <span class="num" aria-hidden="true">02</span>
+            <span class="stage">Evergreen</span>
+            <span class="name">Bajju &amp; Aarav: The Rainy Day Rescue</span>
+            <span class="skill">Bajju · Baby Hanuman</span>
+            <span class="cue">Details</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="step" id="book-3" aria-expanded="false" aria-controls="detail"
+            data-deity="Baby Ganesha" data-pet="Gannu" data-type="Festive (Ganesh Chaturthi)"
+            data-moral="Sharing makes everything sweeter" data-setting="Kitchen, garden"
+            data-keepsake="Silver Anklet" data-chant="—">
+            <span class="num" aria-hidden="true">03</span>
+            <span class="stage">Festive</span>
+            <span class="name">Gannu &amp; Aarav: The Modak Magic</span>
+            <span class="skill">Gannu · Baby Ganesha</span>
+            <span class="cue">Details</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="step" id="book-4" aria-expanded="false" aria-controls="detail"
+            data-deity="Baby Shiva" data-pet="Bhole" data-type="Evergreen"
+            data-moral="The dark is never empty" data-setting="Dadi's bedroom at night, starry sky"
+            data-keepsake="Tiny Glowing Crescent Moon Charm"
+            data-chant="Bhole, Bhole, light the night — scare the darkness, make it bright!">
+            <span class="num" aria-hidden="true">04</span>
+            <span class="stage">Evergreen</span>
+            <span class="name">Bhole &amp; Aarav: The Not-So-Dark Night</span>
+            <span class="skill">Bhole · Baby Shiva</span>
+            <span class="cue">Details</span>
+          </button>
+        </li>
+      </ol>
+
+      <div id="detail" class="detail" hidden>
+        <p class="stage" id="detail-stage"></p>
+        <h3 id="detail-title"></h3>
+        <dl class="spec">
+          <div><dt>Deity</dt><dd id="detail-deity"></dd></div>
+          <div><dt>Pet name</dt><dd id="detail-pet"></dd></div>
+          <div><dt>Type</dt><dd id="detail-type"></dd></div>
+          <div><dt>Keepsake</dt><dd id="detail-keepsake"></dd></div>
+          <div class="wide"><dt>Moral</dt><dd id="detail-moral"></dd></div>
+          <div class="wide"><dt>Setting</dt><dd id="detail-setting"></dd></div>
+          <div class="wide"><dt>Chant</dt><dd id="detail-chant"></dd></div>
+        </dl>
+      </div>
+    </section>
+  </article>
+</div>
+
+<footer class="colophon">A Story Lab · Books</footer>
+<script>
+(function () {
+  var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
+  var panel = document.getElementById("detail");
+  var fields = ["deity", "pet", "type", "keepsake", "moral", "setting", "chant"];
+  function open(step) {
+    steps.forEach(function (s) {
+      var on = s === step;
+      s.setAttribute("aria-expanded", on ? "true" : "false");
+      s.querySelector(".cue").textContent = on ? "Close" : "Details";
+    });
+    if (!step) { panel.hidden = true; return; }
+    document.getElementById("detail-stage").textContent = "Book " + parseInt(step.querySelector(".num").textContent, 10);
+    document.getElementById("detail-title").textContent = step.querySelector(".name").textContent;
+    fields.forEach(function (key) {
+      document.getElementById("detail-" + key).textContent = step.getAttribute("data-" + key);
+    });
+    panel.hidden = false;
+  }
+  steps.forEach(function (step) {
+    step.addEventListener("click", function () {
+      var on = step.getAttribute("aria-expanded") === "true";
+      open(on ? null : step);
+      if (history.replaceState) history.replaceState(null, "", on ? "#books" : "#" + step.id);
+    });
+  });
+  var id = location.hash.slice(1);
+  var start = id && document.getElementById(id);
+  if (start && start.classList.contains("step")) open(start);
+})();
+</script>
+</body>
+</html>
