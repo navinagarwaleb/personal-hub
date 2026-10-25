@@ -1,7 +1,7 @@
 # personal-hub
 
-Private personal dashboard. Single static page (`index.html`) with a client-side password gate.
+Private personal dashboard. Static pages live in `public/`.
 
-- Edit `index.html` to change content.
-- Change the password: `python3 -c "import hashlib,getpass;print(hashlib.sha256(getpass.getpass().encode()).hexdigest())"` and replace `PW_HASH`.
+- Edit `public/data.js` to change hub content.
+- Book Lab Pipeline is `public/workflow.html`. Visual rules live in `public/design.css` (Press).
 - Do not store sensitive data here: the content is visible in page source.

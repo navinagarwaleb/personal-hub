@@ -57,14 +57,6 @@ ul.todo label{cursor:pointer;flex:1}
 ul.todo input:checked + span{text-decoration:line-through;color:var(--muted)}
 footer{margin-top:64px;border-top:1px solid var(--border);color:var(--muted);font-size:.9rem}
 footer .wrap{padding-top:20px;padding-bottom:28px}
-/* password gate */
-#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:99;padding:16px}
-#gate form{display:flex;flex-direction:column;gap:12px;width:min(320px,100%)}
-#gate h2{margin:0;font-size:1.1rem}
-#gate input{font:inherit;padding:12px;border-radius:10px;border:1px solid #78716c;background:var(--card);color:var(--fg);min-height:44px}
-#gate button{font:inherit;padding:12px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:600;cursor:pointer;min-height:44px}
-#gate .err{color:var(--danger);margin:0;min-height:1.2em}
-body.locked .wrap{visibility:hidden}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 /* --- accounts table --- */
 .search-wrap{margin-bottom:16px}
@@ -97,16 +89,6 @@ body.locked .wrap{visibility:hidden}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-
-<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-t">
-  <form id="gate-form">
-    <h2 id="gate-t">Enter password</h2>
-    <label for="pw" class="sr">Password</label>
-    <input id="pw" type="password" autocomplete="current-password" required>
-    <button type="submit">Unlock</button>
-    <p class="err" id="gate-err" role="alert"></p>
-  </form>
-</div>
 
 <header class="top">
   <div class="wrap">
@@ -163,31 +145,6 @@ body.locked .wrap{visibility:hidden}
 <script src="data.js"></script>
 <script>
 (function(){
-  // ---- password gate (SHA-256 of the password; plain text is not stored) ----
-  var H="743d81d8d2e10451a0b98ca3843e7c9b873c576d06c97a3dfabb41a962234f74";
-  var store={
-    get:function(k){try{return sessionStorage.getItem(k)}catch(e){return null}},
-    set:function(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
-  };
-  function sha(s){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){
-    return Array.prototype.map.call(new Uint8Array(b),function(x){return x.toString(16).padStart(2,"0")}).join("")})}
-  function unlock(){
-    var g=document.getElementById("gate");if(g)g.remove();
-    document.body.classList.remove("locked")
-  }
-  document.body.classList.add("locked");
-  if(store.get("hub-ok")=="1"){unlock()}
-  else{
-    document.getElementById("gate-form").addEventListener("submit",function(ev){
-      ev.preventDefault();
-      var pw=document.getElementById("pw");
-      sha(pw.value).then(function(h){
-        if(h===H){store.set("hub-ok","1");unlock()}
-        else{document.getElementById("gate-err").textContent="Wrong password.";pw.select()}
-      });
-    });
-  }
-
   // ---- helpers ----
   var D=window.HUB_DATA||{links:[],notes:[],todos:[],accounts:[]};
   function el(t,a,text){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(text!=null)e.appendChild(document.createTextNode(text));return e}

@@ -8,31 +8,6 @@ section{margin-top:32px}h2{font-size:.8rem;text-transform:uppercase;letter-spaci
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
 .card a{color:var(--accent);font-weight:600;text-decoration:none}.card a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style></head><body>
-<style>
-#gate{position:fixed;inset:0;background:var(--bg,#fafaf9);display:flex;align-items:center;justify-content:center;z-index:99;padding:16px}
-#gate form{display:flex;flex-direction:column;gap:12px;width:min(320px,100%)}
-#gate input{font:inherit;padding:12px;border-radius:10px;border:1px solid #888;background:transparent;color:inherit}
-#gate button{font:inherit;padding:12px;border-radius:10px;border:0;background:var(--accent);color:#000;font-weight:600;cursor:pointer;min-height:44px}
-#gate .err{color:#b91c1c;margin:0;min-height:1.2em}
-body.locked main,body.locked header{visibility:hidden}
-</style>
-<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-t">
-<form id="gate-form"><h2 id="gate-t" style="text-transform:none;letter-spacing:0;font-size:1.1rem;margin:0">Enter password</h2>
-<label for="pw" class="sr">Password</label><input id="pw" type="password" autocomplete="current-password" required>
-<button type="submit">Unlock</button><p class="err" id="gate-err" role="alert"></p></form></div>
-<script>
-(async()=>{
-const H="743d81d8d2e10451a0b98ca3843e7c9b873c576d06c97a3dfabb41a962234f74";
-document.body.classList.add("locked");
-const f=document.getElementById("gate-form"),e=document.getElementById("gate-err");
-async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
-if(sessionStorage.getItem("hub-ok")==="1"){document.getElementById("gate").remove();document.body.classList.remove("locked");return}
-f.addEventListener("submit",async ev=>{ev.preventDefault();const ok=(await sha(document.getElementById("pw").value))===H;
-if(ok){sessionStorage.setItem("hub-ok","1");document.getElementById("gate").remove();document.body.classList.remove("locked")}
-else{e.textContent="Wrong password.";document.getElementById("pw").select()}});
-})();
-</script>
-
 <header><h1>My Hub</h1><p class="sub">Quick reference, saved links, and to-dos.</p></header>
 <main>
 <section><h2>Links</h2><div class="card"><a href="#">Example bookmark</a><p class="sub" style="margin:4px 0 0">Short description</p></div></section>
